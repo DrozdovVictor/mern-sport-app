@@ -30,7 +30,19 @@ const DB_PASSWORD = process.env.DB_PASSWORD
 // )
 app.use(
   cors({
-    origin: "http://localhost:5173", // Укажите ТОЧНЫЙ адрес вашего фронтенда
+    origin: function (origin, callback) {
+      // Разрешаем localhost и любые поддомены проекта на vercel.app
+      if (
+        !origin ||
+        origin === "http://localhost:5173" ||
+        /^https:\/\/mern-sport-.*\.vercel\.app$/.test(origin) || // Для тестовых ссылок
+        origin === "https://mern-sport.vercel.app" // Для главной ссылки
+      ) {
+        callback(null, true)
+      } else {
+        callback(new Error("Not allowed by CORS"))
+      }
+    },
     credentials: true, // Разрешает принимать и отправлять куки
   }),
 )
