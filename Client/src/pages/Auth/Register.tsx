@@ -1,0 +1,79 @@
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "../../redux/store"
+import { registerUser } from "../../redux/slices/authSlice"
+import { Link, useNavigate } from "react-router"
+
+import AuthLayout from "./AuthLayout"
+import Input from "../../components/Input"
+import { toast } from "react-toastify"
+
+function Register() {
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+
+  async function handleRegister() {
+    try {
+      const user = await dispatch(registerUser({ username, password })).unwrap()
+      setUsername("")
+      setPassword("")
+
+      if (user.role === "trainer") navigate("/trainer")
+      else navigate("/")
+    } catch (error) {
+      console.error(error)
+      toast.error("Error while registration")
+    }
+  }
+
+  return (
+    <AuthLayout>
+      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+        Регистрация
+      </h2>
+      <form
+        className="space-y-4"
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleRegister()
+        }}
+      >
+        <Input
+          id="name"
+          type="text"
+          label="Имя"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Ваше имя"
+        />
+        <Input
+          id="password"
+          type="password"
+          label="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+        />
+        <button
+          type="submit"
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-medium transition-colors"
+        >
+          Зарегистрироваться
+        </button>
+      </form>
+      <p className="mt-4 text-center text-sm text-gray-600">
+        Уже есть аккаунт?{" "}
+        <Link
+          to="/login"
+          className="text-indigo-600 hover:text-indigo-700 font-medium"
+        >
+          Войти
+        </Link>
+      </p>
+    </AuthLayout>
+  )
+}
+
+export default Register

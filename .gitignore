@@ -1,0 +1,19 @@
+# Игнорируем зависимости бэкенда и фронтенда
+node_modules/
+Client/node_modules/
+Server/node_modules/
+
+# Игнорируем сборку фронтенда (зависит от того, Vite у вас или CRA)
+Client/dist/
+Client/build/
+
+# Секретные файлы (пароли от БД, API ключи)
+.env
+Server/.env
+Client/.env
+
+# Логи ошибок
+*.log
+
+Ответы на вопросы чекпоинт 1.txt
+Чекпоит кода 1.md
