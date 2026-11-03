@@ -127,13 +127,15 @@ const appSlice = createSlice({
         }
 
         // Логика уведомлений при ошибках
-        const isGetMe = action.type.startsWith("auth/getMe")
-        const isGetExercises = action.type.includes("/getExercises")
+        // const isGetMe = action.type.startsWith("auth/getMe")
+        // const isGetExercises = action.type.includes("/getExercises")
         const statusCode = action.payload?.status || action.error?.status
 
         if (
-          (isGetMe || isGetExercises) &&
-          (statusCode === 401 || statusCode === 403)
+          // isGetMe ||
+          // isGetExercises ||
+          statusCode === 401 ||
+          statusCode === 403
         ) {
           return
         }

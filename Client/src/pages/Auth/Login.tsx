@@ -32,12 +32,9 @@ function Login() {
 
   async function handleLogin() {
     try {
-      const user = await dispatch(loginUser({ username, password })).unwrap()
+      await dispatch(loginUser({ username, password })).unwrap()
       setUsername("")
       setPassword("")
-
-      if (user.role === "trainer") navigate("/trainer")
-      else navigate("/")
     } catch (error) {
       console.error(error)
       toast.error("Error while login")

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { getMe } from "./redux/slices/authSlice"
+import { checkIsAuth, getMe } from "./redux/slices/authSlice"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "./redux/store"
 import { Route, Routes } from "react-router"
@@ -26,6 +26,7 @@ import { getUsers } from "./redux/slices/adminSlice"
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
+  const { role } = useSelector((state: RootState) => state.auth)
   const { notification } = useSelector((state: RootState) => state.app)
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function App() {
     }
 
     initApp()
-  }, [dispatch])
+  }, [dispatch, role])
 
   useEffect(() => {
     if (notification) toast(notification)
