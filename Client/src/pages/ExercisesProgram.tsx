@@ -7,7 +7,6 @@ import {
   editExercisesProgram,
 } from "../redux/slices/exersisesProgramSlice"
 import { toast } from "react-toastify"
-// import AssignProgramModal from "./AssignProgram"
 
 // Описываем структуру одного упражнения в форме
 interface SelectedExercise {
@@ -104,7 +103,7 @@ function ExercisesProgram() {
     // Валидация перед отправкой
     const hasEmptyExercise = selectedExercises.some((ex) => !ex.exerciseId)
     if (hasEmptyExercise) {
-      toast("Пожалуйста, выберите упражнения во всех полях")
+      toast("Select the exercises in all fields.")
       return
     }
 
@@ -131,10 +130,8 @@ function ExercisesProgram() {
             exercises: programData.exercises,
           }),
         ).unwrap()
-        toast("Программа изменена успешно!")
       } else {
         await dispatch(createExercisesProgram(programData)).unwrap()
-        toast("Программа создана успешно!")
       }
     } catch (error) {
       console.error(error)

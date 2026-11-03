@@ -5,13 +5,11 @@ export async function createExercisesProgram(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
     const { title, description, exercises } = req.body
-
-    console.log("Текущий userId из мидлвара:", req.userId)
 
     const newExercisesProgram = await ExercisesProgram.create({
       title,
@@ -37,7 +35,7 @@ export async function editExercisesProgram(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
@@ -47,7 +45,7 @@ export async function editExercisesProgram(req, res) {
 
     if (!exercisesProgramToEdit) {
       return res.status(404).json({
-        message: "Программа упражнений не найдена",
+        message: "The exercise program was not found",
       })
     }
 
@@ -75,7 +73,7 @@ export async function deleteExercisesProgram(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
@@ -94,7 +92,7 @@ export async function deleteExercisesProgram(req, res) {
     console.log(error)
 
     return res.status(500).json({
-      message: "Error while exercise creating",
+      message: "Error while exercises program deleting",
     })
   }
 }
@@ -103,7 +101,7 @@ export async function getUserExercisesPrograms(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
@@ -115,7 +113,7 @@ export async function getUserExercisesPrograms(req, res) {
 
     return res.json({
       exercisesPrograms: userExercisesPrograms,
-      message: "User's exersises Programms is here! ",
+      message: "Exercises programs getting successful",
     })
   } catch (error) {
     console.log(error)
@@ -130,7 +128,7 @@ export async function getTrainerExercisesPrograms(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
@@ -140,13 +138,13 @@ export async function getTrainerExercisesPrograms(req, res) {
 
     return res.status(201).json({
       data: exercisesPrograms,
-      message: "Exercises programs fetched",
+      message: "Exercises programs for trainer gotted",
     })
   } catch (error) {
     console.log(error)
 
     return res.status(500).json({
-      message: "Error while exercise fetching",
+      message: "Error while exercise getting",
     })
   }
 }
@@ -217,6 +215,9 @@ export async function assignProgram(req, res, next) {
       message: "Program assigned successfully",
     })
   } catch (error) {
-    next(error)
+    console.log(error)
+    res.status(500).json({
+      message: "Error while assign exercises program",
+    })
   }
 }

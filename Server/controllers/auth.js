@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import User from "../models/User.js"
 
-export async function register(req, res, next) {
+export async function register(req, res) {
   try {
     const { username, password } = req.body
 
@@ -24,8 +24,10 @@ export async function register(req, res, next) {
       message: "Account created successfully.",
     })
   } catch (error) {
-    console.log("Error while registration")
-    next(error)
+    console.log(error)
+    res.status(500).json({
+      message: "Error while registration",
+    })
   }
 }
 

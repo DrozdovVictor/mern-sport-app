@@ -4,7 +4,7 @@ export async function createExercise(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
@@ -12,7 +12,7 @@ export async function createExercise(req, res) {
 
     if (!title || title.trim() === "") {
       return res.status(400).json({
-        message: "Поле 'title' обязательно для заполнения",
+        message: "The ‘title’ field is required",
       })
     }
 
@@ -39,7 +39,7 @@ export async function editExercise(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
@@ -49,7 +49,7 @@ export async function editExercise(req, res) {
 
     if (!exerciseToEdit) {
       return res.status(404).json({
-        message: "Упражнение не найдено",
+        message: "The exercise was not found",
       })
     }
 
@@ -61,7 +61,7 @@ export async function editExercise(req, res) {
 
     if (!title || title.trim() === "") {
       return res.status(400).json({
-        message: "Поле 'title' обязательно для заполнения",
+        message: "The ‘title’ field is required",
       })
     }
 
@@ -73,7 +73,7 @@ export async function editExercise(req, res) {
 
     return res.json({
       data: validateExerciseToEdit,
-      message: "Упражнение отредактировано",
+      message: "The exercise has been edited",
     })
   } catch (error) {
     console.log(error)
@@ -88,14 +88,16 @@ export async function deleteExercise(req, res) {
   try {
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
     const { id } = req.body
 
     if (!id) {
-      return res.status(400).json({ message: "Не указан ID упражнения" })
+      return res
+        .status(400)
+        .json({ message: "The exercise ID is not specified" })
     }
 
     const exerciseToDelete = await Exercise.findByIdAndDelete({
@@ -105,13 +107,13 @@ export async function deleteExercise(req, res) {
 
     if (!exerciseToDelete) {
       return res.status(404).json({
-        message: "Упражнение не найдено",
+        message: "The exercise was not found",
       })
     }
 
     return res.json({
       data: exerciseToDelete,
-      message: "Упражнение удалено",
+      message: "The exercise has been deleted",
     })
   } catch (error) {
     res.status(500).json({
@@ -127,7 +129,7 @@ export async function getExercises(req, res) {
     console.log(req.userId)
     if (!req.userId) {
       return res.status(401).json({
-        message: "Неавторизован: отсутствует ID пользователя",
+        message: "Unauthorized: user ID is missing",
       })
     }
 
@@ -135,13 +137,13 @@ export async function getExercises(req, res) {
 
     return res.json({
       data: exercises,
-      message: "Exercises fetched",
+      message: "Exercises gotted",
     })
   } catch (error) {
     console.log(error)
 
     return res.status(500).json({
-      message: "Server error",
+      message: "Error while exercise getting",
     })
   }
 }

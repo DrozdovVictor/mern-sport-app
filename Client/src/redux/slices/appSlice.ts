@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, type AsyncThunk } from "@reduxjs/toolkit"
 
 import { loginUser, registerUser, logoutUser, getMe } from "./authSlice"
 import {
@@ -13,8 +13,11 @@ import {
   createExercisesProgram,
   editExercisesProgram,
   deleteExercisesProgram,
+  assignExercisesProgram,
 } from "./exersisesProgramSlice"
+import { chooseTrainer, getMyTrainer, getTrainers } from "./clientSlice"
 import { getClients } from "./trainerSlice"
+import { changeUserRole, getUsers } from "./adminSlice"
 
 interface AppState {
   notification: string | null
@@ -26,25 +29,54 @@ const initialState: AppState = {
   isLoading: false,
 }
 
-const thunks = [
+// Thunks, которые должны показывать глобальный полноэкранный лоадер
+const globalLoadingThunks: AsyncThunk<any, any, any>[] = [
+  // auth
   loginUser,
   registerUser,
   logoutUser,
   getMe,
 
+  // exercises
   getExercises,
+
+  // exercsies programs
+  getExercisesProgramsForClient,
+  getExercisesProgramsForTrainer,
+
+  // client
+  getTrainers,
+  getMyTrainer,
+
+  // trainner
+  getClients,
+
+  // admin
+  getUsers,
+]
+
+// Thunks, которые обрабатывают только уведомления (без глобального лоадера)
+const notificationOnlyThunks: AsyncThunk<any, any, any>[] = [
+  // exercises
   createExercise,
   editExercise,
   deleteExercise,
 
-  getExercisesProgramsForClient,
-  getExercisesProgramsForTrainer,
+  // exercsies programs
   createExercisesProgram,
   editExercisesProgram,
   deleteExercisesProgram,
+  assignExercisesProgram,
 
-  getClients,
+  // client
+  chooseTrainer,
+
+  // admin
+  changeUserRole,
 ]
+
+// Объединяем их для обработки fulfilled/rejected уведомлений
+const allThunks = [...globalLoadingThunks, ...notificationOnlyThunks]
 
 const appSlice = createSlice({
   name: "app",
@@ -56,41 +88,49 @@ const appSlice = createSlice({
   },
   // 💡 Магия: перехватываем экшены из ДРУГИХ слайсов!
   extraReducers: (builder) => {
-    thunks.forEach((thunk) => {
+    // Обрабатываем PENDING для всех thunks
+    allThunks.forEach((thunk) => {
       builder.addCase(thunk.pending, (state) => {
-        state.isLoading = true
+        // Включаем глобальный isLoading ТОЛЬКО если thunk находится в списке глобальных
+        if (globalLoadingThunks.includes(thunk)) {
+          state.isLoading = true
+        }
       })
     })
 
-    thunks.forEach((thunk) => {
+    // Обрабатываем FULFILLED для всех thunks (ровно один addCase на каждый thunk!)
+    allThunks.forEach((thunk) => {
       builder.addCase(thunk.fulfilled, (state, action: any) => {
-        state.isLoading = false
+        // Выключаем глобальный лоадер, если он включался
+        if (globalLoadingThunks.includes(thunk)) {
+          state.isLoading = false
+        }
 
-        // Исключаем getMe и get-запросы, чтобы не спамить уведомлениями при обычной загрузке данных
+        // Логика уведомлений
         const isGetAction =
           action.type.startsWith("auth/getMe") ||
           action.type.includes("/getExercises")
-
         if (isGetAction) return
 
-        // Если бэкенд передает текст успешного выполнения, записываем его в notification
         if (action.payload?.message) {
           state.notification = action.payload.message
         }
       })
     })
 
-    thunks.forEach((thunk) => {
+    // Обрабатываем REJECTED для всех thunks (ровно один addCase на каждый thunk!)
+    allThunks.forEach((thunk) => {
       builder.addCase(thunk.rejected, (state, action: any) => {
-        // Логика сброса глобальной загрузки
-        state.isLoading = false
+        // Выключаем глобальный лоадер, если он включался
+        if (globalLoadingThunks.includes(thunk)) {
+          state.isLoading = false
+        }
 
-        // 1. Проверяем, это ошибка 401 от getMe при старте приложения?
+        // Логика уведомлений при ошибках
         const isGetMe = action.type.startsWith("auth/getMe")
-        const isGetExercises = action.type.includes("/getExercises") // Сработает и на getExercises, и на getExercisesProgram
+        const isGetExercises = action.type.includes("/getExercises")
         const statusCode = action.payload?.status || action.error?.status
 
-        // Если это запросы за данными при старте, и сервер ответил 401 или 403 — молча выходим
         if (
           (isGetMe || isGetExercises) &&
           (statusCode === 401 || statusCode === 403)
@@ -98,7 +138,6 @@ const appSlice = createSlice({
           return
         }
 
-        // 2. Для реальных ошибок показываем уведомление
         const errorMessage =
           action.payload?.message || action.error?.message || "Произошла ошибка"
         state.notification = errorMessage

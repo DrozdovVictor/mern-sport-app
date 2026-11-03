@@ -20,7 +20,8 @@ const PORT = process.env.PORT
 const DB_NAME = process.env.DB_NAME
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
-const MONGO_URL = process.env.MONGO_URL
+const MONGO_URL = `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27019/${DB_NAME}?authSource=admin`
+const MONGO_URL_PROD = process.env.MONGO_URL
 
 // Middleware
 // app.use(

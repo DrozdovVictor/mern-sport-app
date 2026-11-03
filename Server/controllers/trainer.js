@@ -17,6 +17,9 @@ export async function getClients(req, res, next) {
       clients,
     })
   } catch (error) {
-    next(error)
+    console.log(error)
+    res.status(500).json({
+      message: "Error while getting clients",
+    })
   }
 }

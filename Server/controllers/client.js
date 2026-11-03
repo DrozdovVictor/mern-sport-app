@@ -1,17 +1,19 @@
 import User from "../models/User.js"
 
-export async function getTrainers(req, res, next) {
+export async function getTrainers(req, res) {
   try {
     const trainers = await User.find({ role: "trainer" }).select("username")
 
     return res.json({ trainers })
   } catch (error) {
     console.log(error)
-    next(error)
+    res.status(500).json({
+      message: "Error while get trainers",
+    })
   }
 }
 
-export async function getMyTrainer(req, res, next) {
+export async function getMyTrainer(req, res) {
   try {
     // 1. Ищем юзера и подтягиваем только username тренера
     const user = await User.findById(req.userId).populate("trainer", "username")
@@ -35,11 +37,13 @@ export async function getMyTrainer(req, res, next) {
     })
   } catch (error) {
     console.log(error)
-    next(error)
+    res.status(500).json({
+      message: "Error while getting my trainer",
+    })
   }
 }
 
-export async function chooseTrainer(req, res, next) {
+export async function chooseTrainer(req, res) {
   try {
     const { trainerId } = req.body
 
@@ -68,8 +72,12 @@ export async function chooseTrainer(req, res, next) {
         _id: updatedUser.trainer._id,
         username: updatedUser.trainer.username,
       },
+      message: `You have chosen ${updatedUser.trainer.username} as your trainer`,
     })
   } catch (error) {
-    next(error)
+    console.log(error)
+    res.status(500).json({
+      message: "Error while choosing trainer",
+    })
   }
 }
