@@ -39,7 +39,7 @@ function Navbar() {
               onClick={handleLogout}
               className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors"
             >
-              Выйти
+              Out
             </button>
           </div>
         </div>

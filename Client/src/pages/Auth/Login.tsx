@@ -44,7 +44,7 @@ function Login() {
   return (
     <AuthLayout>
       <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-        Вход
+        Login
       </h2>
       <form
         className="space-y-4"
@@ -64,7 +64,7 @@ function Login() {
         <Input
           id="password"
           type="password"
-          label="Пароль"
+          label="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
@@ -73,16 +73,16 @@ function Login() {
           type="submit"
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-medium transition-colors"
         >
-          Войти
+          Enter
         </button>
       </form>
       <p className="mt-4 text-center text-sm text-gray-600">
-        Нет аккаунта?{" "}
+        No account?{" "}
         <Link
           to="/register"
           className="text-indigo-600 hover:text-indigo-700 font-medium"
         >
-          Зарегистрироваться
+          Registration
         </Link>
       </p>
     </AuthLayout>

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { checkIsAuth, getMe } from "./redux/slices/authSlice"
+import { getMe } from "./redux/slices/authSlice"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "./redux/store"
 import { Route, Routes } from "react-router"
@@ -48,6 +48,7 @@ function App() {
           dispatch(getTrainers())
           dispatch(getMyTrainer())
         } else if (response.role === "admin") {
+          dispatch(getExercises())
           dispatch(getUsers())
         }
       } catch (err: any) {

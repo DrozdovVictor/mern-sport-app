@@ -46,9 +46,7 @@ function TrainerDashboard() {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Приветственный блок */}
-        <h1 className="text-3xl font-bold text-gray-900">
-          Привет, {username}!
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900">Hi, {username}!</h1>
         {/* <p className="text-gray-500 mt-2">
           Управляй своими программами и клиентами
         </p> */}
@@ -59,21 +57,21 @@ function TrainerDashboard() {
             <p className="text-3xl font-bold text-gray-900 mt-4">
               {clients.length}
             </p>
-            <p className="text-sm text-gray-500 mt-1">Моих клиентов</p>
+            <p className="text-sm text-gray-500 mt-1">My clients</p>
           </div>
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">💪</div>
             <p className="text-3xl font-bold text-gray-900 mt-4">
               {exercises.length}
             </p>
-            <p className="text-sm text-gray-500 mt-1">Упражнений в базе</p>
+            <p className="text-sm text-gray-500 mt-1">Exercises in the base</p>
           </div>
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">📚</div>
             <p className="text-3xl font-bold text-gray-900 mt-4">
               {exercisesPrograms.length}
             </p>
-            <p className="text-sm text-gray-500 mt-1">Моих программ</p>
+            <p className="text-sm text-gray-500 mt-1">My programs</p>
           </div>
           {/* <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">📅</div>
@@ -182,11 +180,11 @@ function TrainerDashboard() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">
-              Программы упражнений
+              Exercises programs
             </h2>
             <Link
               to="/exercises-program"
-              aria-label="Создать программу"
+              aria-label="Create exercises program"
               className="w-9 h-9 inline-flex items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-200 transition-colors"
             >
               <svg
@@ -224,18 +222,14 @@ function TrainerDashboard() {
                         <p className="text-xs text-gray-500 mt-0.5">
                           {program.exercises.length}{" "}
                           {program.exercises.length === 1
-                            ? "упражнение"
-                            : program.exercises.length < 5
-                              ? "упражнения"
-                              : "упражнений"}
+                            ? "exercise"
+                            : "exercises"}
                         </p>
                         <p className="text-xs text-gray-500 mt-0.5">
                           {program.assignedTo.length}{" "}
                           {program.assignedTo.length === 1
-                            ? "клиент"
-                            : program.assignedTo.length < 5
-                              ? "клиента"
-                              : "клиентов"}
+                            ? "client"
+                            : "clients"}
                         </p>
                       </div>
                     </div>
@@ -248,7 +242,7 @@ function TrainerDashboard() {
                           description: program?.description,
                           exercises: program.exercises,
                         }}
-                        aria-label="Редактировать Силовой цикл"
+                        aria-label="Edit"
                         className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
                       >
                         <svg
@@ -266,7 +260,7 @@ function TrainerDashboard() {
                       </Link>
                       <button
                         type="button"
-                        aria-label="Удалить программу упражнений"
+                        aria-label="Delete the exercises program"
                         className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
                         onClick={(e) => {
                           e.preventDefault()
@@ -303,7 +297,7 @@ function TrainerDashboard() {
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-50 text-indigo-600 text-sm font-medium hover:bg-indigo-100 transition-colors"
                     >
                       <span>👥</span>
-                      Назначить
+                      Assign
                     </button>
                   </div>
                 </div>
@@ -315,11 +309,11 @@ function TrainerDashboard() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">
-              Мои упражнения
+              My exercises
             </h2>
             <Link
               to="/create-or-edit-exercise"
-              aria-label="Смотреть все упражнения"
+              aria-label="See all exercises"
               className="w-9 h-9 inline-flex items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-200 transition-colors"
             >
               <svg
@@ -370,7 +364,7 @@ function TrainerDashboard() {
 
                       <button
                         type="button"
-                        aria-label={`Удалить ${exercise.title}`}
+                        aria-label={`Delete ${exercise.title}`}
                         className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
                         onClick={(e) => {
                           e.preventDefault()
@@ -409,7 +403,7 @@ function TrainerDashboard() {
         {/* Мои клиенты */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Мои клиенты</h2>
+            <h2 className="text-lg font-semibold text-gray-900">My clients</h2>
             {/* <span className="text-sm text-gray-500">Всего: 4</span> */}
           </div>
 
@@ -437,62 +431,53 @@ function TrainerDashboard() {
         </div> */}
 
           {/* Список клиентов */}
-          <div className="divide-y divide-gray-100">
-            {clients.map((client) => {
-              return (
-                <div key={client._id} className="flex items-center gap-3 py-3">
-                  <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-medium shrink-0">
-                    {getInitials(client.username)}
+          {clients.length > 0 ? (
+            <div className="divide-y divide-gray-100">
+              {clients.map((client) => {
+                return (
+                  <div
+                    key={client._id}
+                    className="flex items-center gap-3 py-3"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-medium shrink-0">
+                      {getInitials(client.username)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {client.username}
+                      </p>
+                      {/* <p className="text-xs text-gray-500 truncate">ivan@mail.com</p> */}
+                    </div>
+                    {client.assignedPrograms.length !== 0 ? (
+                      client.assignedPrograms.map((program) => {
+                        return (
+                          <span
+                            key={program._id}
+                            className="hidden sm:inline-flex text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600"
+                          >
+                            {program.title}
+                          </span>
+                        )
+                      })
+                    ) : (
+                      <span className="hidden sm:inline-flex text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
+                        Without a program
+                      </span>
+                    )}
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-gray-900 truncate">
-                      {client.username}
-                    </p>
-                    {/* <p className="text-xs text-gray-500 truncate">ivan@mail.com</p> */}
-                  </div>
-                  {client.assignedPrograms.length !== 0 ? (
-                    client.assignedPrograms.map((program) => {
-                      return (
-                        <span
-                          key={program._id}
-                          className="hidden sm:inline-flex text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600"
-                        >
-                          {program.title}
-                        </span>
-                      )
-                    })
-                  ) : (
-                    <span className="hidden sm:inline-flex text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
-                      Без программы
-                    </span>
-                  )}
-
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <button
-                      type="button"
-                      aria-label="Назначить программу Иван Волков"
-                      className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-                    >
-                      📋
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Профиль Иван Волков"
-                      className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-                    >
-                      👤
-                    </button>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          {/* Пустое состояние */}
-          {/* <div className="p-8 text-center">
-    <p className="text-gray-500 text-sm">У вас пока нет клиентов</p>
-    <p className="text-xs text-gray-400 mt-1">Обратитесь к администратору</p>
-  </div> */}
+                )
+              })}
+            </div>
+          ) : (
+            <div className="p-8 text-center">
+              <p className="text-gray-500 text-sm">
+                You don't have any clients yet
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Contact the administrator
+              </p>
+            </div>
+          )}
         </div>
       </div>
 

@@ -21,9 +21,7 @@ function ClientDashboard() {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Приветственный блок */}
-        <h1 className="text-3xl font-bold text-gray-900">
-          Привет, {username}!
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900">Hi, {username}!</h1>
         {/* <p className="text-gray-500 mt-2">Вот твой прогресс за неделю</p> */}
         {/* Статистические карточки */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
@@ -37,24 +35,27 @@ function ClientDashboard() {
             <p className="text-3xl font-bold text-gray-900 mt-4">12 500 кг</p>
             <p className="text-sm text-gray-500 mt-1">Общий вес за неделю</p>
           </div> */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          {/* <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">📅</div>
             <p className="text-3xl font-bold text-gray-900 mt-4">47</p>
             <p className="text-sm text-gray-500 mt-1">Дней в клубе</p>
-          </div>
+          </div> */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">📋</div>
             <p className="text-3xl font-bold text-gray-900 mt-4">
               {exercisesPrograms.length}
             </p>
-            <p className="text-sm text-gray-500 mt-1">Активных программ</p>
+            <p className="text-sm text-gray-500 mt-1">
+              Exercises{" "}
+              {exercisesPrograms.length === 1 ? "program" : "programs"}
+            </p>
           </div>
         </div>
         {/* Программы упражнений */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">
-              Программы упражнений
+              Exercises programs
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -69,11 +70,7 @@ function ClientDashboard() {
                   </p>
                   <p className="text-xs text-gray-500 mt-1">
                     {program.exercises.length}{" "}
-                    {program.exercises.length === 1
-                      ? "упражнение"
-                      : program.exercises.length < 5
-                        ? "упражнения"
-                        : "упражнений"}
+                    {program.exercises.length === 1 ? "exercise" : "exercises"}
                   </p>
                 </div>
               )
@@ -89,10 +86,10 @@ function ClientDashboard() {
                   className="bg-indigo-50 rounded-2xl border-2 border-indigo-500 shadow-sm p-6 flex flex-col justify-center items-center text-center relative"
                 >
                   <span className="absolute top-4 right-4 bg-indigo-600 text-white text-xs font-medium px-2.5 py-1 rounded-full">
-                    Ваш тренер
+                    Your trainer
                   </span>
                   <div
-                    aria-label="Аватар тренера Мария Петрова"
+                    aria-label="The trainer's avatar"
                     className="w-20 h-20 rounded-full bg-indigo-200 text-indigo-600 flex items-center justify-center text-2xl font-bold"
                   >
                     {getInitials(trainer.username)}
@@ -110,7 +107,7 @@ function ClientDashboard() {
                   className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:shadow-md transition-shadow"
                 >
                   <div
-                    aria-label="Аватар тренера Алексей Смирнов"
+                    aria-label="The trainer's avatar"
                     className="w-20 h-20 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl font-bold"
                   >
                     {getInitials(trainer.username)}
@@ -127,7 +124,7 @@ function ClientDashboard() {
                       dispatch(chooseTrainer({ trainerId: trainer._id }))
                     }}
                   >
-                    Выбрать
+                    Choose
                   </button>
                 </div>
               )

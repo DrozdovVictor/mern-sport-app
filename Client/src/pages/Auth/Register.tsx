@@ -31,7 +31,7 @@ function Register() {
   return (
     <AuthLayout>
       <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-        Регистрация
+        Registration
       </h2>
       <form
         className="space-y-4"
@@ -43,15 +43,15 @@ function Register() {
         <Input
           id="name"
           type="text"
-          label="Имя"
+          label="Name"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Ваше имя"
+          placeholder="Your name"
         />
         <Input
           id="password"
           type="password"
-          label="Пароль"
+          label="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
@@ -60,16 +60,16 @@ function Register() {
           type="submit"
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-medium transition-colors"
         >
-          Зарегистрироваться
+          Register
         </button>
       </form>
       <p className="mt-4 text-center text-sm text-gray-600">
-        Уже есть аккаунт?{" "}
+        Already have an account?{" "}
         <Link
           to="/login"
           className="text-indigo-600 hover:text-indigo-700 font-medium"
         >
-          Войти
+          Login
         </Link>
       </p>
     </AuthLayout>

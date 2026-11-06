@@ -7,16 +7,18 @@ import UserRow from "./UserRow"
 function AdminDashboard() {
   const { username } = useSelector((state: RootState) => state.auth)
   const { users } = useSelector((state: RootState) => state.admin)
+  const { exercises } = useSelector((state: RootState) => state.exercises)
+  const { exercisesPrograms } = useSelector(
+    (state: RootState) => state.exercisesProgram,
+  )
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Приветственный блок */}
-        <h1 className="text-3xl font-bold text-gray-900">
-          Привет, {username}!
-        </h1>
-        <p className="text-gray-500 mt-2">Общая статистика клуба</p>
+        <h1 className="text-3xl font-bold text-gray-900">Hi, {username}!</h1>
+        <p className="text-gray-500 mt-2">General club statistics</p>
         {/* Статистические карточки */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -24,23 +26,27 @@ function AdminDashboard() {
             <p className="text-3xl font-bold text-gray-900 mt-4">
               {users.length}
             </p>
-            <p className="text-sm text-gray-500 mt-1">Всего пользователей</p>
+            <p className="text-sm text-gray-500 mt-1">Total users</p>
           </div>
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">📋</div>
-            <p className="text-3xl font-bold text-gray-900 mt-4">34</p>
-            <p className="text-sm text-gray-500 mt-1">Программ</p>
+            <p className="text-3xl font-bold text-gray-900 mt-4">
+              {exercisesPrograms.length}
+            </p>
+            <p className="text-sm text-gray-500 mt-1">Exercises programs</p>
           </div>
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">💪</div>
-            <p className="text-3xl font-bold text-gray-900 mt-4">89</p>
-            <p className="text-sm text-gray-500 mt-1">Упражнений</p>
+            <p className="text-3xl font-bold text-gray-900 mt-4">
+              {exercises.length}
+            </p>
+            <p className="text-sm text-gray-500 mt-1">Exercises</p>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          {/* <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <div className="bg-indigo-50 p-3 rounded-xl w-fit text-2xl">🟢</div>
             <p className="text-3xl font-bold text-gray-900 mt-4">23</p>
             <p className="text-sm text-gray-500 mt-1">Активных сегодня</p>
-          </div>
+          </div> */}
         </div>
         {/* Основной блок */}
         {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8"> */}
@@ -134,13 +140,13 @@ function AdminDashboard() {
           {/* Шапка списка (скрыта на мобилках) */}
           <div className="hidden md:flex items-center bg-gray-50 border-b border-gray-100 px-6 py-4 gap-6">
             <div className="flex-1 text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Пользователь
+              User
             </div>
             <div className="w-40 text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Роль
+              Role
             </div>
             <div className="w-24 text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Действия
+              Save
             </div>
           </div>
           {/* Список пользователей */}
@@ -148,6 +154,7 @@ function AdminDashboard() {
             {users.map((user) => {
               return (
                 <UserRow
+                  key={user._id}
                   id={user._id}
                   username={user.username}
                   role={user.role}

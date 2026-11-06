@@ -11,6 +11,12 @@ export async function createExercisesProgram(req, res) {
 
     const { title, description, exercises } = req.body
 
+    if (!title) {
+      return res.json({
+        message: "Title is required",
+      })
+    }
+
     const newExercisesProgram = await ExercisesProgram.create({
       title,
       description,

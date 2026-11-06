@@ -48,13 +48,13 @@ function AssignProgramModal({
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">
-              Назначить программу
+              Assign a program
             </h2>
             <p className="text-sm text-gray-500 mt-1">{programName}</p>
           </div>
           <button
             type="button"
-            aria-label="Закрыть"
+            aria-label="Close"
             onClick={onClose}
             className="w-8 h-8 shrink-0 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
           >
@@ -77,9 +77,9 @@ function AssignProgramModal({
         <div className="mt-5 max-h-80 overflow-y-auto -mx-2 px-2">
           {clients.length === 0 ? (
             <div className="p-8 text-center text-gray-500 text-sm">
-              У вас пока нет клиентов
+              You don't have any clients yet
               <p className="text-xs text-gray-400 mt-1">
-                Обратитесь к администратору
+                Contact the administrator
               </p>
             </div>
           ) : (
@@ -109,7 +109,7 @@ function AssignProgramModal({
         {/* Футер */}
         <div className="flex items-center justify-between gap-3 pt-5 mt-5 border-t border-gray-100">
           <span className="text-sm text-gray-500">
-            Выбрано: {selectedIds.length}
+            Selected: {selectedIds.length}
           </span>
           <div className="flex gap-3">
             <button
@@ -117,7 +117,7 @@ function AssignProgramModal({
               onClick={onClose}
               className="px-4 py-2.5 rounded-lg font-medium bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
             >
-              Отмена
+              Cancel
             </button>
             {/* TODO: обработчик назначения (POST assignedTo) */}
             <button
@@ -136,7 +136,7 @@ function AssignProgramModal({
               }}
               className="px-4 py-2.5 rounded-lg font-medium bg-indigo-600 hover:bg-indigo-700 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Назначить
+              Assign
             </button>
           </div>
         </div>

@@ -38,18 +38,18 @@ function UserRow({ id, username, role }: UserRowProps) {
 
       <div className="md:w-40">
         <select
-          aria-label="Изменить роль"
+          aria-label="Edit role"
           // ✅ Заменили defaultValue на value
           value={selectedRole}
           // ✅ Добавили обработчик
           onChange={(e) =>
             setSelectedRole(e.target.value as UserRowProps["role"])
           }
-          className="w-full max-w-[140px] px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full max-w-35 px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         >
-          <option value="client">Клиент</option>
-          <option value="trainer">Тренер</option>
-          <option value="admin">Админ</option>
+          <option value="client">Client</option>
+          <option value="trainer">Trainer</option>
+          <option value="admin">Admin</option>
         </select>
       </div>
 
@@ -59,7 +59,7 @@ function UserRow({ id, username, role }: UserRowProps) {
           onClick={handleSave}
           // ✅ Блокируем кнопку, если роль не изменилась
           disabled={!isChanged}
-          aria-label="Сохранить роль"
+          aria-label="Save role"
           className="w-8 h-8 rounded-lg hover:bg-indigo-50 text-indigo-600 flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <svg
