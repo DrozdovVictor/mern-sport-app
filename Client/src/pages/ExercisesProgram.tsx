@@ -17,11 +17,7 @@ interface SelectedExercise {
   restTime: number
 }
 
-interface ExercisesProgramProps {
-  isEdit?: boolean
-}
-
-function ExercisesProgram({ isEdit }: ExercisesProgramProps) {
+function ExercisesProgram() {
   const location = useLocation()
   const exercisePropgram = location.state
   const { exercises } = useSelector((state: RootState) => state.exercises)
