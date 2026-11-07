@@ -1,0 +1,3 @@
+Supabase:
+project name: mern-sport-app
+db password: sTr0ng1-pAssw0rd-for67ever;)
