@@ -1,75 +1,78 @@
-# React + TypeScript + Vite
+# 🏋️ Sport Club — MERN Fullstack Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Sport Club** — это полноценное fullstack-приложение (MERN) для управления программами тренировок. Платформа связывает тренеров и клиентов, позволяя создавать базы упражнений, формировать индивидуальные программы тренировок.
 
-Currently, two official plugins are available:
+🚀 **[Живое демо (Live Demo)](https://mern-sport-app.vercel.app/login)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🎯 Основной функционал (Features)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Приложение построено на основе **RBAC** и имеет три роли пользователей:
 
-## Expanding the ESLint configuration
+### 👤 Клиент (Client)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Регистрация и авторизация.
+- Выбор своего тренера из списка доступных специалистов.
+- Просмотр назначенных программ тренировок.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🏋️ Тренер (Trainer)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Создание, редактирование и удаление собственной базы упражнений.
+- Формирование программ тренировок (добавление упражнений, настройка параметров).
+- Просмотр списка своих клиентов.
+- Назначение программ тренировок конкретным клиентам.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🛡️ Администратор (Admin)
 
-```
+- Просмотр списка всех зарегистрированных пользователей.
+- Управление ролями (повышение клиента до тренера, назначение админов).
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠 Технологический стек (Tech Stack)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Frontend
 
+- **React 18** (Vite) + **TypeScript**
+- **Redux Toolkit** — управление глобальным состоянием (Auth, данные клиентов, программы).
+- **React Router v6** — маршрутизация и защита роутов (Protected Routes).
+- **Tailwind CSS** — стилизация и адаптивная верстка.
+- **Axios** — HTTP-клиент.
+
+### Backend
+
+- **Node.js** + **Express.js**
+- **MongoDB** + **Mongoose** (ODM)
+- **JWT** (JSON Web Tokens) + **httpOnly Cookies** — безопасная аутентификация.
+- **Bcrypt** — хеширование паролей.
+- **Mongoose Virtuals** — связывание сущностей (получение программ клиента без дублирования данных).
+
+### DevOps & Deployment
+
+- **Frontend:** Vercel
+- **Backend:** Render
+- **Database:** MongoDB Atlas (Cloud)
+
+---
+
+## 🧠 Что было реализовано (Technical Highlights)
+
+Этот проект создавался с упором на правильную архитектуру и безопасность:
+
+1. **Безопасная аутентификация:** JWT хранятся в `httpOnly` куки (защита от XSS-атак), настроен CORS с `credentials: true`.
+2. **Role-Based Access Control:** Написаны кастомные Express-middleware (`checkAuth`, `checkRole`) для защиты эндпоинтов на уровне API.
+3. **Связи в MongoDB:** Использованы `populate` и Virtual Populate для эффективного связывания Клиентов, Тренеров и Программ без избыточного дублирования данных.
+4. **Оптимизация Redux:** Обновление состояния (например, смена роли пользователя) происходит по `findIndex` без перезагрузки страницы (Optimistic UI updates).
+5. **Ownership Check:** Проверка прав на редактирование/удаление ресурсов (тренер может менять только свои упражнения и программы).
+
+---
+
+## 💻 Локальный запуск (Getting Started)
+
+### 1. Клонирование репозитория
+
+```bash
+git clone https://github.com/DrozdovVictor/mern-sport-app.git
+cd mern-sport-app
 ```
