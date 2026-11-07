@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const instance = axios.create({
-  baseURL: "https://mern-sport-app.onrender.com/", // for production
+  baseURL: "https://mern-sport-app.onrender.com", // for production
   // baseURL: "http://localhost:5000/", // for local
   withCredentials: true,
 })
