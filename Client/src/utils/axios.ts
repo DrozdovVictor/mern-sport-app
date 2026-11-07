@@ -1,8 +1,8 @@
 import axios from "axios"
 
 const instance = axios.create({
-  // baseURL: import.meta.env.VITE_API_URL,
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://mern-sport-app.onrender.com/", // for production
+  // baseURL: "http://localhost:5000/", // for local
   withCredentials: true,
 })
 
