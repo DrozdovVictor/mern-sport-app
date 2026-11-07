@@ -3,6 +3,7 @@ import { createSlice, type AsyncThunk } from "@reduxjs/toolkit"
 import { loginUser, registerUser, logoutUser, getMe } from "./authSlice"
 import {
   getExercises,
+  getExercisesForAdmin,
   createExercise,
   editExercise,
   deleteExercise,
@@ -10,6 +11,7 @@ import {
 import {
   getExercisesProgramsForClient,
   getExercisesProgramsForTrainer,
+  getExercisesPrograms,
   createExercisesProgram,
   editExercisesProgram,
   deleteExercisesProgram,
@@ -39,8 +41,10 @@ const globalLoadingThunks: AsyncThunk<any, any, any>[] = [
 
   // exercises
   getExercises,
+  getExercisesForAdmin,
 
   // exercsies programs
+  getExercisesPrograms,
   getExercisesProgramsForClient,
   getExercisesProgramsForTrainer,
 
@@ -109,7 +113,8 @@ const appSlice = createSlice({
         // Логика уведомлений
         const isGetAction =
           action.type.startsWith("auth/getMe") ||
-          action.type.includes("/getExercises")
+          action.type.includes("/getExercises") ||
+          action.type.includes("/getAllExercisesProgram")
         if (isGetAction) return
 
         if (action.payload?.message) {

@@ -71,7 +71,19 @@ const adminSlice = createSlice({
 
     // Change user role
     builder.addCase(changeUserRole.fulfilled, (state, action) => {
-      state.users = [...state.users, action.payload.updatedUser]
+      // state.users = [...state.users, action.payload.updatedUser] - неправильный подход
+
+      // 1. Находим индекс пользователя в массиве по его _id
+      const index = state.users.findIndex(
+        (user) => user._id === action.payload.updatedUser._id,
+      )
+
+      console.log(index)
+
+      // 2. Если нашли — заменяем его на обновленного
+      if (index !== -1) {
+        state.users[index] = action.payload.updatedUser
+      }
     })
     builder.addCase(changeUserRole.rejected, (state) => {
       state.users = [...state.users]

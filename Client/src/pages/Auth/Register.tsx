@@ -45,6 +45,7 @@ function Register() {
           type="text"
           label="Name"
           value={username}
+          autoComplete="new-username"
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Your name"
         />
@@ -53,6 +54,7 @@ function Register() {
           type="password"
           label="Password"
           value={password}
+          autoComplete="new-password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
         />

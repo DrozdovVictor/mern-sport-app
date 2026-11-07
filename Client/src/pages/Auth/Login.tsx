@@ -58,6 +58,7 @@ function Login() {
           type="text"
           label="Username"
           value={username}
+          autoComplete="current-username"
           onChange={(e) => setUsername(e.target.value)}
           placeholder="User"
         />
@@ -66,6 +67,7 @@ function Login() {
           type="password"
           label="Password"
           value={password}
+          autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
         />

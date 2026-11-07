@@ -58,24 +58,34 @@ function ClientDashboard() {
               Exercises programs
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {exercisesPrograms.map((program) => {
-              return (
-                <div
-                  key={program._id}
-                  className="relative border border-gray-100 rounded-xl p-4 hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors"
-                >
-                  <p className="text-sm font-medium text-gray-900 mt-3">
-                    {program.title}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {program.exercises.length}{" "}
-                    {program.exercises.length === 1 ? "exercise" : "exercises"}
-                  </p>
-                </div>
-              )
-            })}
-          </div>
+          {exercisesPrograms.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {exercisesPrograms.map((program) => {
+                return (
+                  <div
+                    key={program._id}
+                    className="relative border border-gray-100 rounded-xl p-4 hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors"
+                  >
+                    <p className="text-sm font-medium text-gray-900 mt-3">
+                      {program.title}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {program.exercises.length}{" "}
+                      {program.exercises.length === 1
+                        ? "exercise"
+                        : "exercises"}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="p-8 text-center">
+              <p className="text-gray-500 text-sm">
+                You don't have any exercises programs yet
+              </p>
+            </div>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {trainers.map((trainer) => {

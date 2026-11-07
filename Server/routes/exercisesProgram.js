@@ -5,6 +5,7 @@ import {
   createExercisesProgram,
   editExercisesProgram,
   deleteExercisesProgram,
+  getExercisesPrograms,
   getTrainerExercisesPrograms,
   getUserExercisesPrograms,
   assignProgram,
@@ -37,6 +38,15 @@ exercisesProgramRouter.post(
   checkAuth,
   checkRole("trainer"),
   deleteExercisesProgram,
+)
+
+// Get
+// http://localhost:5000/exercisesProgram/get
+exercisesProgramRouter.get(
+  "/get-all",
+  checkAuth,
+  checkRole("admin"),
+  getExercisesPrograms,
 )
 
 // User get

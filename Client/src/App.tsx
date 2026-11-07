@@ -12,9 +12,13 @@ import ClientDashboard from "./pages/Dashboards/Client"
 import TrainerDashboard from "./pages/Dashboards/Trainer"
 import AdminDashboard from "./pages/Dashboards/Admin/Admin"
 import CreateOrEditExercise from "./pages/CreateOrEditExercise"
-import { getExercises } from "./redux/slices/exercisesSlice"
+import {
+  getExercises,
+  getExercisesForAdmin,
+} from "./redux/slices/exercisesSlice"
 import ExercisesProgram from "./pages/ExercisesProgram"
 import {
+  getExercisesPrograms,
   getExercisesProgramsForClient,
   getExercisesProgramsForTrainer,
 } from "./redux/slices/exersisesProgramSlice"
@@ -48,7 +52,8 @@ function App() {
           dispatch(getTrainers())
           dispatch(getMyTrainer())
         } else if (response.role === "admin") {
-          dispatch(getExercises())
+          dispatch(getExercisesForAdmin())
+          dispatch(getExercisesPrograms())
           dispatch(getUsers())
         }
       } catch (err: any) {

@@ -202,108 +202,116 @@ function TrainerDashboard() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {exercisesPrograms.map((program) => {
-              return (
-                <div
-                  key={program._id}
-                  className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col"
-                >
-                  {/* Шапка карточки */}
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-xl shrink-0">
-                        📋
+          {exercisesPrograms.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {exercisesPrograms.map((program) => {
+                return (
+                  <div
+                    key={program._id}
+                    className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col"
+                  >
+                    {/* Шапка карточки */}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex gap-3 min-w-0">
+                        <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-xl shrink-0">
+                          📋
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-sm font-semibold text-gray-900 truncate">
+                            {program.title}
+                          </h3>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            {program.exercises.length}{" "}
+                            {program.exercises.length === 1
+                              ? "exercise"
+                              : "exercises"}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            {program.assignedTo.length}{" "}
+                            {program.assignedTo.length === 1
+                              ? "client"
+                              : "clients"}
+                          </p>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <h3 className="text-sm font-semibold text-gray-900 truncate">
-                          {program.title}
-                        </h3>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          {program.exercises.length}{" "}
-                          {program.exercises.length === 1
-                            ? "exercise"
-                            : "exercises"}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          {program.assignedTo.length}{" "}
-                          {program.assignedTo.length === 1
-                            ? "client"
-                            : "clients"}
-                        </p>
+                      <div className="flex items-center gap-1.5">
+                        <Link
+                          to="/exercises-program"
+                          state={{
+                            id: program._id,
+                            title: program.title,
+                            description: program?.description,
+                            exercises: program.exercises,
+                          }}
+                          aria-label="Edit"
+                          className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="w-4 h-4"
+                          >
+                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                          </svg>
+                        </Link>
+                        <button
+                          type="button"
+                          aria-label="Delete the exercises program"
+                          className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleExercisesProgramDelete(program._id)
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="w-4 h-4"
+                          >
+                            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                            <path d="M10 11v6M14 11v6" />
+                          </svg>
+                        </button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <Link
-                        to="/exercises-program"
-                        state={{
-                          id: program._id,
-                          title: program.title,
-                          description: program?.description,
-                          exercises: program.exercises,
-                        }}
-                        aria-label="Edit"
-                        className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="w-4 h-4"
-                        >
-                          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                        </svg>
-                      </Link>
+                    {/* Описание */}
+                    {program.description && (
+                      <p className="text-sm text-gray-500 mt-3 line-clamp-2">
+                        {program.description}
+                      </p>
+                    )}
+                    {/* Футер карточки */}
+                    <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-gray-100">
                       <button
                         type="button"
-                        aria-label="Delete the exercises program"
-                        className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          handleExercisesProgramDelete(program._id)
-                        }}
+                        onClick={() => setSelectedProgram(program)}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-50 text-indigo-600 text-sm font-medium hover:bg-indigo-100 transition-colors"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="w-4 h-4"
-                        >
-                          <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                          <path d="M10 11v6M14 11v6" />
-                        </svg>
+                        <span>👥</span>
+                        Assign
                       </button>
                     </div>
                   </div>
-                  {/* Описание */}
-                  {program.description && (
-                    <p className="text-sm text-gray-500 mt-3 line-clamp-2">
-                      {program.description}
-                    </p>
-                  )}
-                  {/* Футер карточки */}
-                  <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-gray-100">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedProgram(program)}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-50 text-indigo-600 text-sm font-medium hover:bg-indigo-100 transition-colors"
-                    >
-                      <span>👥</span>
-                      Assign
-                    </button>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="p-8 text-center">
+              <p className="text-gray-500 text-sm">
+                You don't have any exercises programs yet
+              </p>
+            </div>
+          )}
         </div>
         {/* Мои упражнения */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
@@ -330,74 +338,82 @@ function TrainerDashboard() {
               </svg>
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {exercises.map((exercise) => {
-              return (
-                <div
-                  key={exercise._id ?? exercise.title}
-                  className="relative border border-gray-100 rounded-xl p-4 hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-xl">
-                      💪
+          {exercises.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {exercises.map((exercise) => {
+                return (
+                  <div
+                    key={exercise._id ?? exercise.title}
+                    className="relative border border-gray-100 rounded-xl p-4 hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-xl">
+                        💪
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <Link
+                          to="/create-or-edit-exercise"
+                          state={{ exercise }}
+                          className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="w-4.5 h-4.5"
+                          >
+                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                          </svg>
+                        </Link>
+
+                        <button
+                          type="button"
+                          aria-label={`Delete ${exercise.title}`}
+                          className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleExerciseDelete(exercise._id)
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="w-4.5 h-4.5"
+                          >
+                            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                            <path d="M10 11v6M14 11v6" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-1.5">
-                      <Link
-                        to="/create-or-edit-exercise"
-                        state={{ exercise }}
-                        className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="w-4.5 h-4.5"
-                        >
-                          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-                        </svg>
-                      </Link>
-
-                      <button
-                        type="button"
-                        aria-label={`Delete ${exercise.title}`}
-                        className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          handleExerciseDelete(exercise._id)
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="w-4.5 h-4.5"
-                        >
-                          <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                          <path d="M10 11v6M14 11v6" />
-                        </svg>
-                      </button>
-                    </div>
+                    <p className="text-sm font-medium text-gray-900 mt-3">
+                      {exercise.title}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {exercise.description}
+                    </p>
                   </div>
-
-                  <p className="text-sm font-medium text-gray-900 mt-3">
-                    {exercise.title}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {exercise.description}
-                  </p>
-                </div>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="p-8 text-center">
+              <p className="text-gray-500 text-sm">
+                You don't have any exercises yet
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Мои клиенты */}
@@ -451,12 +467,22 @@ function TrainerDashboard() {
                     {client.assignedPrograms.length !== 0 ? (
                       client.assignedPrograms.map((program) => {
                         return (
-                          <span
-                            key={program._id}
-                            className="hidden sm:inline-flex text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600"
-                          >
-                            {program.title}
-                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              key={program._id}
+                              className="hidden sm:inline-flex text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600"
+                            >
+                              {program.title}
+                            </span>
+                            <div className="flex items-center shrink-0">
+                              <p className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                                📋
+                              </p>
+                              <p className="w-8 h-8 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                                👤
+                              </p>
+                            </div>
+                          </div>
                         )
                       })
                     ) : (
@@ -472,9 +498,6 @@ function TrainerDashboard() {
             <div className="p-8 text-center">
               <p className="text-gray-500 text-sm">
                 You don't have any clients yet
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Contact the administrator
               </p>
             </div>
           )}

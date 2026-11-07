@@ -78,6 +78,26 @@ export const getExercisesProgramsForClient = createAsyncThunk(
   },
 )
 
+export const getExercisesPrograms = createAsyncThunk(
+  "exercisesProgram/getAllExercisesProgram",
+  async (_, thunkAPI) => {
+    try {
+      const res = await instance.get("/exercisesProgram/get-all")
+
+      return res.data
+    } catch (error: any) {
+      console.log(error)
+      const errorMessage =
+        error.response?.data?.message || error.message || "Something went wrong"
+
+      return thunkAPI.rejectWithValue({
+        message: errorMessage,
+        status: error.response?.status,
+      })
+    }
+  },
+)
+
 export const createExercisesProgram = createAsyncThunk(
   "exercisesProgram/createExercisesProgram",
   async (
@@ -199,6 +219,13 @@ export const exercisesProgramSlice = createSlice({
       },
     )
     builder.addCase(getExercisesProgramsForClient.rejected, (state) => {
+      state.exercisesPrograms = []
+    })
+
+    builder.addCase(getExercisesPrograms.fulfilled, (state, action) => {
+      state.exercisesPrograms = [...action.payload.exercisesPrograms]
+    })
+    builder.addCase(getExercisesPrograms.rejected, (state) => {
       state.exercisesPrograms = []
     })
 

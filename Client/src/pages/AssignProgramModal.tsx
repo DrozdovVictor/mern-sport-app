@@ -78,9 +78,6 @@ function AssignProgramModal({
           {clients.length === 0 ? (
             <div className="p-8 text-center text-gray-500 text-sm">
               You don't have any clients yet
-              <p className="text-xs text-gray-400 mt-1">
-                Contact the administrator
-              </p>
             </div>
           ) : (
             <div className="space-y-1">

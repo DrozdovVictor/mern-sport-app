@@ -126,7 +126,6 @@ export async function deleteExercise(req, res) {
 
 export async function getExercises(req, res) {
   try {
-    console.log(req.userId)
     if (!req.userId) {
       return res.status(401).json({
         message: "Unauthorized: user ID is missing",
@@ -134,6 +133,29 @@ export async function getExercises(req, res) {
     }
 
     const exercises = await Exercise.find({ author: req.userId })
+
+    return res.json({
+      data: exercises,
+      message: "Exercises gotted",
+    })
+  } catch (error) {
+    console.log(error)
+
+    return res.status(500).json({
+      message: "Error while exercise getting",
+    })
+  }
+}
+
+export async function getExercisesForAdmin(req, res) {
+  try {
+    if (!req.userId) {
+      return res.status(401).json({
+        message: "Unauthorized: user ID is missing",
+      })
+    }
+
+    const exercises = await Exercise.find()
 
     return res.json({
       data: exercises,

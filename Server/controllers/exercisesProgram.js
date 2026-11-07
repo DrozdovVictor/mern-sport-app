@@ -103,6 +103,29 @@ export async function deleteExercisesProgram(req, res) {
   }
 }
 
+export async function getExercisesPrograms(req, res) {
+  try {
+    if (!req.userId) {
+      return res.status(401).json({
+        message: "Unauthorized: user ID is missing",
+      })
+    }
+
+    const exercisesPrograms = await ExercisesProgram.find()
+
+    return res.json({
+      exercisesPrograms,
+      message: "Exercises programs getting successful",
+    })
+  } catch (error) {
+    console.log(error)
+
+    return res.json({
+      message: "Error while getting your exercises programs",
+    })
+  }
+}
+
 export async function getUserExercisesPrograms(req, res) {
   try {
     if (!req.userId) {
