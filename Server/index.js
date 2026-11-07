@@ -21,7 +21,7 @@ const DB_NAME = process.env.DB_NAME
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 const MONGO_URL = `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27019/${DB_NAME}?authSource=admin`
-const MONGO_URL_PROD = process.env.MONGO_URL
+const MONGO_URL_PROD = process.env.MONGO_URL_PROD
 
 // Middleware
 // app.use(
@@ -72,16 +72,45 @@ app.get("/", (req, res) => {
   res.json("All is fine!")
 })
 
-async function startServer() {
+// local dev
+// async function startServer() {
+//   try {
+//     await mongoose.connect(MONGO_URL)
+//   } catch (error) {
+//     console.error("Database connection error:", error)
+//   }
+
+//   app.listen(PORT, "0.0.0.0", () => {
+//     console.log("Server started...")
+//   })
+// }
+
+// startServer()
+
+// Улучшенная функция подключения к БД для Serverless сред
+
+// production mode
+async function connectDB() {
+  // Если соединение уже установлено, не подключаемся заново
+  if (mongoose.connection.readyState >= 1) return
+
+  // На Vercel используем MONGO_URL_PROD из переменных окружения, локально — localhost
+  const connectionString =
+    process.env.NODE_ENV === "production" ? MONGO_URL_PROD : MONGO_URL
+
   try {
-    await mongoose.connect(MONGO_URL)
+    await mongoose.connect(connectionString)
+    console.log("Database connected successfully")
   } catch (error) {
     console.error("Database connection error:", error)
   }
-
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log("Server started...")
-  })
 }
 
-startServer()
+// Вызываем подключение перед обработкой запросов Express
+app.use(async (req, res, next) => {
+  await connectDB()
+  next()
+})
+
+// ЭКСПОРТ ДЛЯ ES MODULES (Вместо app.listen)
+export default app
