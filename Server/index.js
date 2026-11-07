@@ -58,7 +58,6 @@ app.use(
         return callback(null, true)
       }
 
-      // Железобетонная проверка: если в адресе ссылки Vercel есть название вашего проекта
       if (origin.includes("mern-sport") && origin.endsWith(".vercel.app")) {
         return callback(null, true)
       }
@@ -108,31 +107,3 @@ async function startServer() {
 }
 
 startServer()
-
-// Улучшенная функция подключения к БД для Serverless сред
-
-// production mode
-// async function connectDB() {
-//   // Если соединение уже установлено, не подключаемся заново
-//   if (mongoose.connection.readyState >= 1) return
-
-//   // На Vercel используем MONGO_URL_PROD из переменных окружения, локально — localhost
-//   const connectionString =
-//     process.env.NODE_ENV === "production" ? MONGO_URL_PROD : MONGO_URL
-
-//   try {
-//     await mongoose.connect(connectionString)
-//     console.log("Database connected successfully")
-//   } catch (error) {
-//     console.error("Database connection error:", error)
-//   }
-// }
-
-// // Вызываем подключение перед обработкой запросов Express
-// app.use(async (req, res, next) => {
-//   await connectDB()
-//   next()
-// })
-
-// // ЭКСПОРТ ДЛЯ ES MODULES (Вместо app.listen)
-// export default app

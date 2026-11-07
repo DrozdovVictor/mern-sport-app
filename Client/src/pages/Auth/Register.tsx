@@ -12,16 +12,12 @@ function Register() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const dispatch = useDispatch<AppDispatch>()
-  // const navigate = useNavigate()
 
   async function handleRegister() {
     try {
       await dispatch(registerUser({ username, password })).unwrap()
       setUsername("")
       setPassword("")
-
-      // if (user.role === "trainer") navigate("/trainer")
-      // else navigate("/")
     } catch (error) {
       console.error(error)
       toast.error("Error while registration")

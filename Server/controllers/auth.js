@@ -59,8 +59,8 @@ export async function login(req, res) {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // ОБЯЗАТЕЛЬНО: сообщает браузеру, что кука защищена (HTTPS)
-      sameSite: "none", // ОБЯЗАТЕЛЬНО: разрешает передачу куки между Vercel и Render
+      secure: true,
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000, // Кука будет жить 30 дней
     })
 
@@ -142,7 +142,10 @@ export async function getMe(req, res) {
 
 export async function logout(req, res) {
   try {
-    res.clearCookie("token")
+    res.clearCookie("token", {
+      secure: true,
+      sameSite: "none",
+    })
 
     return res.json({
       message: "You have successfully logged out.",
