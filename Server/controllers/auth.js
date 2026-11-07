@@ -15,12 +15,14 @@ export async function register(req, res) {
 
     const hash = await bcrypt.hash(password, 10)
 
-    await User.create({
+    const newUser = await User.create({
       username,
       password: hash,
+      role: "client",
     })
 
     return res.json({
+      user: newUser,
       message: "Account created successfully.",
     })
   } catch (error) {
@@ -59,6 +61,9 @@ export async function login(req, res) {
 
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true, // ОБЯЗАТЕЛЬНО: сообщает браузеру, что кука защищена (HTTPS)
+      sameSite: "none", // ОБЯЗАТЕЛЬНО: разрешает передачу куки между Vercel и Render
+      maxAge: 30 * 24 * 60 * 60 * 1000, // Кука будет жить 30 дней
     })
 
     return res.json({
