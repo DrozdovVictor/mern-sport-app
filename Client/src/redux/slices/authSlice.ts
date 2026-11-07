@@ -25,7 +25,7 @@ const initialState: initialStateProps = {
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async ({ username, password }: registerUserProps) => {
+  async ({ username, password }: registerUserProps, thunkAPI) => {
     try {
       const res = await instance.post("/auth/register", {
         username,
@@ -33,15 +33,19 @@ export const registerUser = createAsyncThunk(
       })
 
       return res.data
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || "No access",
+        status: error.response?.status, // <--- Сохраняем 401 статус
+      })
     }
   },
 )
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async ({ username, password }: registerUserProps) => {
+  async ({ username, password }: registerUserProps, thunkAPI) => {
     try {
       const res = await instance.post("/auth/login", {
         username,
@@ -49,8 +53,12 @@ export const loginUser = createAsyncThunk(
       })
 
       return res.data
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || "No access",
+        status: error.response?.status, // <--- Сохраняем 401 статус
+      })
     }
   },
 )
