@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import type { AppDispatch } from "../../redux/store"
 import { registerUser } from "../../redux/slices/authSlice"
-import { Link, useNavigate } from "react-router"
+import { Link } from "react-router"
 
 import AuthLayout from "./AuthLayout"
 import Input from "../../components/Input"
@@ -12,16 +12,16 @@ function Register() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   async function handleRegister() {
     try {
-      const user = await dispatch(registerUser({ username, password })).unwrap()
+      await dispatch(registerUser({ username, password })).unwrap()
       setUsername("")
       setPassword("")
 
-      if (user.role === "trainer") navigate("/trainer")
-      else navigate("/")
+      // if (user.role === "trainer") navigate("/trainer")
+      // else navigate("/")
     } catch (error) {
       console.error(error)
       toast.error("Error while registration")
