@@ -31,22 +31,43 @@ const FINAL_MONGO_URL = process.env.MONGO_URL || LOCAL_MONGO_URL
 //     credentials: true,
 //   }),
 // )
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       // Разрешаем localhost и любые поддомены проекта на vercel.app
+//       if (
+//         !origin ||
+//         origin === "http://localhost:5173" ||
+//         /^https:\/\/mern-sport-.*\.vercel\.app$/.test(origin) || // Для тестовых ссылок
+//         origin === "https://mern-sport.vercel.app" // Для главной ссылки
+//       ) {
+//         callback(null, true)
+//       } else {
+//         callback(new Error("Not allowed by CORS"))
+//       }
+//     },
+//     credentials: true, // Разрешает принимать и отправлять куки
+//   }),
+// )
+
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Разрешаем localhost и любые поддомены проекта на vercel.app
-      if (
-        !origin ||
-        origin === "http://localhost:5173" ||
-        /^https:\/\/mern-sport-.*\.vercel\.app$/.test(origin) || // Для тестовых ссылок
-        origin === "https://mern-sport.vercel.app" // Для главной ссылки
-      ) {
-        callback(null, true)
-      } else {
-        callback(new Error("Not allowed by CORS"))
+      // Если запроса нет (например, curl) или это localhost
+      if (!origin || origin.startsWith("http://localhost:")) {
+        return callback(null, true)
       }
+
+      // Железобетонная проверка: если в адресе ссылки Vercel есть название вашего проекта
+      if (origin.includes("mern-sport") && origin.endsWith(".vercel.app")) {
+        return callback(null, true)
+      }
+
+      callback(new Error("Not allowed by CORS"))
     },
-    credentials: true, // Разрешает принимать и отправлять куки
+    credentials: true, // Критично для кук
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   }),
 )
 // Подключаем cookie-parser
